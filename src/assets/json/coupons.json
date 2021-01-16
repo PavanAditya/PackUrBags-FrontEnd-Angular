@@ -1,0 +1,32 @@
+{
+    "coupons": [
+        {
+            "couponCode": "PUBDOUBLECASHBACK",
+            "couponDesc": "One lucky winner gets the Double Amount of his booking everyday."
+        },
+        {
+            "couponCode": "PUBPAYTM",
+            "couponDesc": "Pay using paytm and get an instant Pack Ur Bags discount upto 500"
+        },
+        {
+            "couponCode": "PUBELITECUSTOMER",
+            "couponDesc": "Pack Ur Bags Privilaged customers are provided a cashback of upto Rs. 1500/-"
+        },
+        {
+            "couponCode": "PUBFRISTBOOKING",
+            "couponDesc": "Get upto 750 off on first Pack Ur Bags booking."
+        },
+        {
+            "couponCode": "PUBLUCKY100",
+            "couponDesc": "100 Lucky Winners will get complete cashback."
+        },
+        {
+            "couponCode": "PUBHDFC",
+            "couponDesc": "25% discounted bookings with Pack Ur Bags"
+        },
+        {
+            "couponCode": "PUBINSURANCE",
+            "couponDesc": "Get your flight ticket insurance done by Pack Ur Bags."
+        }
+    ]
+}

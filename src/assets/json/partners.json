@@ -1,0 +1,29 @@
+{
+    "partners": [
+        {
+            "partnerLogo": "indigo-logo.png",
+            "partnerTail": "indigo-tail.png",
+            "partnerName": "Indigo"
+        },
+        {
+            "partnerLogo": "air-asia-logo.png",
+            "partnerTail": "air-asia-tail.png",
+            "partnerName": "Air Asia"
+        },
+        {
+            "partnerLogo": "air-india-logo.png",
+            "partnerTail": "air-india-tail.png",
+            "partnerName": "Air India"
+        },
+        {
+            "partnerLogo": "spice-jet-logo.jpg",
+            "partnerTail": "spice-jet-tail.png",
+            "partnerName": "Spice Jet"
+        },
+        {
+            "partnerLogo": "vistara-logo.png",
+            "partnerTail": "vistara-tail.png",
+            "partnerName": "Vistara"
+        }
+    ]
+}

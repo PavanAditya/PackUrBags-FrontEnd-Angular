@@ -1,0 +1,128 @@
+{
+    "icons": [
+        {
+            "id": 0,
+            "iconName": "Flights",
+            "iconImg": "flights-icon.PNG",
+            "iconActiveImg": "flights-icon-blue.PNG"
+        },
+        {
+            "id": 1,
+            "iconName": "Hotels",
+            "iconImg": "hotels-icon.PNG",
+            "iconActiveImg": "hotels-icon-blue.PNG"
+        },
+        {
+            "id": 2,
+            "iconName": "Villas & Apts",
+            "iconImg": "villas-icon.PNG",
+            "iconActiveImg": "villas-icon-blue.PNG"
+        },
+        {
+            "id": 3,
+            "iconName": "Holidays",
+            "iconImg": "holidays-icon.PNG",
+            "iconActiveImg": "holidays-icon-blue.PNG"
+        },
+        {
+            "id": 4,
+            "iconName": "Trains",
+            "iconImg": "trains-icon.PNG",
+            "iconActiveImg": "trains-icon-blue.PNG"
+        },
+        {
+            "id": 5,
+            "iconName": "Buses",
+            "iconImg": "buses-icon.PNG",
+            "iconActiveImg": "buses-icon-blue.PNG"
+        },
+        {
+            "id": 6,
+            "iconName": "Visa",
+            "iconImg": "visa-icon.PNG",
+            "iconActiveImg": "visa-icon-blue.PNG"
+        },
+        {
+            "id": 7,
+            "iconName": "Cabs",
+            "iconImg": "cabs-icon.PNG",
+            "iconActiveImg": "cabs-icon-blue.PNG"
+        },
+        {
+            "id": 8,
+            "iconName": "Charter Flights",
+            "iconImg": "charter-flights-icon.PNG",
+            "iconActiveImg": "charter-flights-icon-blue.PNG"
+        },
+        {
+            "id": 9,
+            "iconName": "More",
+            "iconImg": "more-icon.PNG",
+            "iconActiveImg": "more-icon.PNG"
+        }
+    ],
+    "mobileIcons": [
+        {
+            "id": 0,
+            "iconName": "Flights",
+            "iconImg": "flights-icon.PNG",
+            "iconActiveImg": "flights-icon-blue.PNG"
+        },
+        {
+            "id": 4,
+            "iconName": "Trains",
+            "iconImg": "trains-icon.PNG",
+            "iconActiveImg": "trains-icon-blue.PNG"
+        },
+        {
+            "id": 5,
+            "iconName": "Buses",
+            "iconImg": "buses-icon.PNG",
+            "iconActiveImg": "buses-icon-blue.PNG"
+        },
+        {
+            "id": 7,
+            "iconName": "Cabs",
+            "iconImg": "cabs-icon.PNG",
+            "iconActiveImg": "cabs-icon-blue.PNG"
+        },
+        {
+            "id": 9,
+            "iconName": "More",
+            "iconImg": "more-icon.PNG",
+            "iconActiveImg": "more-icon.PNG"
+        }
+    ],
+    "mobileMoreIcons": [
+        {
+            "id": 1,
+            "iconName": "Hotels",
+            "iconImg": "hotels-icon.PNG",
+            "iconActiveImg": "hotels-icon-blue.PNG"
+        },
+        {
+            "id": 2,
+            "iconName": "Villas & Apts",
+            "iconImg": "villas-icon.PNG",
+            "iconActiveImg": "villas-icon-blue.PNG"
+        },
+        {
+            "id": 3,
+            "iconName": "Holidays",
+            "iconImg": "holidays-icon.PNG",
+            "iconActiveImg": "holidays-icon-blue.PNG"
+        },
+        {
+            "id": 6,
+            "iconName": "Visa",
+            "iconImg": "visa-icon.PNG",
+            "iconActiveImg": "visa-icon-blue.PNG"
+        },
+        {
+            "id": 8,
+            "iconName": "Charter Flights",
+            "iconImg": "charter-flights-icon.PNG",
+            "iconActiveImg": "charter-flights-icon-blue.PNG"
+        }
+    ]
+}
