@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import '~@angular/material/theming';
+
+$custom-typography: mat-typography-config($font-family: '"Titillium Web", sans-serif');
+@include mat-core($custom-typography);
+
+html, body { height: 100%; background-color: #fafafa }
+body { margin: 0; font-family: 'Titillium Web', sans-serif !important; }
+h1, h2, h3 { font-weight: 700 !important; font-family: 'Cabin', sans-serif !important; font-size: 30px !important; }

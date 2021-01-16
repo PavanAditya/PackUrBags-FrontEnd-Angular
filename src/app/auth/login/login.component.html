@@ -1,0 +1,116 @@
+<div class="login-form" fxLayout="row wrap" fxLayoutAlign="center">
+  <p class="form-logo">
+    <img src="assets/logos/pack-ur-bags.png" alt="pack-ur-bags" height=100>
+  </p>
+  <div class="form-toggle" fxLayout="row wrap" fxFlex="90">
+    <div [className]="activeForm === 'login' ? 'tab active' : 'tab'" (click)="activeForm = 'login'"
+      fxLayoutAlign="center" fxFlex="49">Login</div>
+    <div [className]="activeForm === 'register' ? 'tab active' : 'tab'" (click)="activeForm = 'register'"
+      fxLayoutAlign="center" fxFlex="49" fxFlexOffset="2">Register</div>
+  </div>
+  <h3 class="form-head" fxLayoutAlign="center" fxFlex="100">
+    {{activeForm === 'login' ? 'Login' : 'Register'}} Form
+  </h3>
+  <form [formGroup]="signInForm" (submit)="signInValidation()" fxLayout="row wrap" fxLayoutAlign="center"
+    *ngIf="activeForm === 'login'">
+    <div fxFlex="100">
+      <mat-form-field appearance="outline" fxFlex="80" fxFlexOffset="10">
+        <mat-label>UserName / Email</mat-label>
+        <input type="email" matInput placeholder="UserName / Email*" formControlName="email">
+        <mat-error>Enter valid email address</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100">
+      <mat-form-field appearance="outline" id="passwordSignUp" fxFlex="80" fxFlexOffset="10">
+        <mat-label>Password</mat-label>
+        <input type="{{ typeSignInIcon }}" #passwordSignIn matInput placeholder="Password*" formControlName="password">
+        <mat-icon matSuffix id="passwordVisible" #passwordVisible matSuffix (click)="visibilitySignInIcon()">
+          {{ hideSignInIcon ? 'visibility_off' : 'visibility_on' }}
+        </mat-icon>
+        <mat-hint>{{passwordHint}}</mat-hint>
+        <mat-error>Invalid password</mat-error>
+      </mat-form-field>
+    </div>
+    <p class="vertical-offset" fxFlex="100" fxLayoutAlign="center">
+      <a (click)="forgotPassword()">
+        Forgot Password?
+      </a>
+    </p>
+    <p class="vertical-offset"></p>
+    <div fxLayout="row wrap" fxLayoutAlign="center" fxFlex="100">
+      <div fxFlex="50">
+        <button mat-raised-button color="primary" type="submit" (click)="activateSignInSpinner()"
+          fxFlex="70" fxFlexOffset="25">Sign In <span class="spinner"
+            *ngIf="buttonSignInSpinner">
+            <mat-spinner [diameter]="23"></mat-spinner>
+          </span>
+        </button>
+      </div>
+      <div fxFlex="50">
+        <button mat-raised-button color="warn" type="button" (click)="signInFormInit()" fxFlex="70"
+          fxFlexOffset="10">Reset</button>
+      </div>
+      <div fxFlex="100" (click)="signInWithGoogle()">
+        <button mat-raised-button color="default" type="button" class="google-btn"
+          fxFlex="77" fxFlexOffset="13">
+          <img src="assets/icons/google-icon.png" alt="google-icon" matPrefix height="20" class="google-icon" />
+          Sign In with Google
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <form [formGroup]="signUpForm" (submit)="signUpValidation()" fxLayout="row wrap" fxLayoutAlign="center"
+    *ngIf="activeForm === 'register'">
+    <div fxFlex="100">
+      <mat-form-field appearance="outline" fxFlex="38" fxFlexOffset="10">
+        <mat-label>First Name</mat-label>
+        <input type="text" matInput placeholder="First Name*" formControlName="firstName">
+        <mat-error>Enter valid First Name</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="38" fxFlexOffset="4">
+        <mat-label>Last Name</mat-label>
+        <input type="text" matInput placeholder="Last Name*" formControlName="lastName">
+        <mat-error>Enter valid Last Name</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100">
+      <mat-form-field appearance="outline" fxFlex="80" fxFlexOffset="10">
+        <mat-label>UserName / Email</mat-label>
+        <input type="email" matInput placeholder="UserName / Email*" formControlName="email">
+        <mat-error>Enter valid email address</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100">
+      <mat-form-field appearance="outline" id="passwordSignUp" fxFlex="80" fxFlexOffset="10">
+        <mat-label>Password</mat-label>
+        <input type="{{ typeSignUpIcon }}" #passwordSignUp matInput placeholder="Password*" formControlName="password">
+        <mat-icon matSuffix id="passwordVisible" #passwordVisible matSuffix (click)="visibilitySignUpIcon()">
+          {{ hideSignUpIcon ? 'visibility_off' : 'visibility_on' }}
+        </mat-icon>
+        <mat-hint>{{passwordHint}}</mat-hint>
+        <mat-error>Invalid password</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="center" class="signup-vertical-offset" fxFlex="100">
+      <div fxFlex="50">
+        <button mat-raised-button color="primary" type="submit" (click)="activateSignUpSpinner()"
+          fxFlex="70" fxFlexOffset="25">Register <span class="spinner"
+            *ngIf="buttonSignUpSpinner">
+            <mat-spinner [diameter]="23"></mat-spinner>
+          </span></button>
+      </div>
+      <div fxFlex="50">
+        <button mat-raised-button color="warn" type="button" (click)="signUpFormInit()" fxFlex="70"
+          fxFlexOffset="10">Reset</button>
+      </div>
+      <div fxFlex="100" (click)="signInWithGoogle()">
+        <button mat-raised-button color="default" type="button" class="google-btn"
+          fxFlex="77" fxFlexOffset="13">
+          <img src="assets/icons/google-icon.png" alt="google-icon" matPrefix height="20" class="google-icon" />
+          Sign In with Google
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
