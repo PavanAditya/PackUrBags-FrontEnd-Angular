@@ -10,6 +10,9 @@ import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
 import { StaffModule } from './staff/staff.module';
 import { PassengerModule } from './passenger/passenger.module';
+import { Store, StoreModule } from '@ngrx/store';
+import { AppStoreModule } from './store/store.module';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -24,9 +27,11 @@ import { PassengerModule } from './passenger/passenger.module';
     AuthModule,
     AdminModule,
     StaffModule,
-    PassengerModule
+    PassengerModule,
+    AppStoreModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

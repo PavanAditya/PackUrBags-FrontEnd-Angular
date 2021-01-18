@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private authService: AuthService,
     private snackBarService: SnackbarService
   ) { }
 
@@ -57,6 +59,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         Validators.required
       ]),
       lastName: new FormControl('', [
+        Validators.required
+      ]),
+      mobile: new FormControl('', [
+        Validators.minLength(10),
         Validators.required
       ]),
       email: new FormControl('', [
@@ -103,14 +109,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   signInWithGoogle(): void {
-    this.snackBarService.openSnackBar(
-      'Google Sign In Successful to Pack Ur Bags',
-      'green-snackbar'
-    );
+    this.authService.googleLogin();
   }
 
   forgotPassword(): void {
-    this.routerNavigate('/forgotpassword');
+    this.snackBarService.openSnackBar(
+      'Forgot Password Yet to be added',
+      'green-snackbar'
+    );
   }
 
   activateSignInSpinner(): void {
