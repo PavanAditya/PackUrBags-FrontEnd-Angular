@@ -2,21 +2,25 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from './material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './components/header/header.component';
 import { RouterModule } from '@angular/router';
-import { LoadingComponent } from './loading/loading.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LoadingComponent } from './components/loading/loading.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 
 @NgModule({
-  declarations: [HeaderComponent, LoadingComponent, PageNotFoundComponent],
+  declarations: [HeaderComponent, LoadingComponent, PageNotFoundComponent, ProfileComponent],
   imports: [
     CommonModule,
     RouterModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FlexLayoutModule
   ],
   exports: [
     CommonModule,

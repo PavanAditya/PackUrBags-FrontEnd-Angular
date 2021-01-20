@@ -2,8 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { EmailLogin } from 'src/app/shared/models/email-login.model';
+import { PhoneLogin } from 'src/app/shared/models/phone-login.model';
+import { Register } from 'src/app/shared/models/regiser.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { UserFacadeService } from 'src/app/store';
 
 @Component({
   selector: 'app-login',
@@ -22,12 +26,29 @@ export class LoginComponent implements OnInit, OnDestroy {
   hideSignUpIcon = true;
   buttonSignInSpinner = false;
   buttonSignUpSpinner = false;
+  emailLogin: EmailLogin = {
+    email: '',
+    password: ''
+  };
+  phoneLogin: PhoneLogin = {
+    mobileNumber: '',
+    password: ''
+  };
+  registerReq: Register = {
+    password: '',
+    confirmPassword: '',
+    firstName: '',
+    lastName: '',
+    mobileNumber: '',
+    email: ''
+  };
   signInForm: FormGroup;
   signUpForm: FormGroup;
 
   constructor(
     private router: Router,
     private authService: AuthService,
+    private userFacadeService: UserFacadeService,
     private snackBarService: SnackbarService
   ) { }
 
@@ -38,10 +59,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   signInFormInit(): void {
     this.signInForm = new FormGroup({
-      email: new FormControl('', [
-        Validators.pattern(
-          `^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$`
-        ),
+      loginId: new FormControl('', [
         Validators.required
       ]),
       password: new FormControl('', [
@@ -62,7 +80,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         Validators.required
       ]),
       mobile: new FormControl('', [
-        Validators.minLength(10),
+        Validators.pattern(`^[0-9]{10}$`),
         Validators.required
       ]),
       email: new FormControl('', [
@@ -87,10 +105,55 @@ export class LoginComponent implements OnInit, OnDestroy {
         'red-snackbar'
       );
     } else {
-      this.snackBarService.openSnackBar(
-        'Welcome To Pack Ur Bags',
-        'green-snackbar'
-      );
+      const emailRegEx = new RegExp(`^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$`);
+      const phNumRegEx = new RegExp(`^[0-9]{10}$`);
+      if (emailRegEx.test(this.signInForm.value.loginId)) {
+        const {
+          loginId,
+          password
+        } = this.signInForm.value;
+        this.emailLogin = {
+          email: loginId,
+          password
+        };
+        this.authService.emailLogin(this.emailLogin).subscribe(resp => {
+          this.snackBarService.openSnackBar(
+            'Welcome To Pack Ur Bags',
+            'green-snackbar'
+          );
+          this.authService.setSessionItem('token', resp.body.dataObject.data.sessionToken);
+          this.userFacadeService.getUserDetails(resp.body.dataObject.data.sessionToken);
+          this.router.navigate(['/home']);
+        }, err => {
+          this.snackBarService.openSnackBar(
+            `Login Failed. Please try again`,
+            'red-snackbar'
+          );
+        });
+      } else if (phNumRegEx.test(this.signInForm.value.loginId)) {
+        const {
+          loginId,
+          password
+        } = this.signInForm.value;
+        this.phoneLogin = {
+          mobileNumber: loginId,
+          password
+        };
+        this.authService.phNumLogin(this.phoneLogin).subscribe(resp => {
+          this.snackBarService.openSnackBar(
+            'Welcome To Pack Ur Bags',
+            'green-snackbar'
+          );
+          this.authService.setSessionItem('token', resp.body.dataObject.data.sessionToken);
+          this.userFacadeService.getUserDetails(resp.body.dataObject.data.sessionToken);
+          this.router.navigate(['/home']);
+        }, err => {
+          this.snackBarService.openSnackBar(
+            `Login Failed. Please try again`,
+            'red-snackbar'
+          );
+        });
+      }
     }
   }
 
@@ -101,10 +164,55 @@ export class LoginComponent implements OnInit, OnDestroy {
         'red-snackbar'
       );
     } else {
-      this.snackBarService.openSnackBar(
-        'Registered To Pack Ur Bags',
-        'green-snackbar'
-      );
+      const {
+        password,
+        firstName,
+        lastName,
+        mobile,
+        email
+      } = this.signUpForm.value;
+      this.registerReq = {
+        password,
+        confirmPassword: password,
+        firstName,
+        lastName,
+        mobileNumber: mobile,
+        email
+      };
+      this.authService.register(this.registerReq).subscribe(resp => {
+        if (resp.body.status === 200 || resp.body.status === 203) {
+          this.snackBarService.openSnackBar(
+            `Hi ${resp.body.dataObject.data.firstName ? resp.body.dataObject.data.firstName : ''}. You're registered To Pack Ur Bags.`,
+            'green-snackbar'
+          );
+          this.signUpFormInit();
+          this.activeForm = 'login';
+        } else {
+          if (resp.body.status === 403) {
+            this.snackBarService.openSnackBar(
+              resp.body.dataObject.data,
+              'red-snackbar'
+            );
+          } else {
+            this.snackBarService.openSnackBar(
+              `Registration Failed. Please try again`,
+              'red-snackbar'
+            );
+          }
+        }
+      }, err => {
+        if (err.status === 403) {
+          this.snackBarService.openSnackBar(
+            err.error.dataObject.data,
+            'red-snackbar'
+          );
+        } else {
+          this.snackBarService.openSnackBar(
+            `Registration Failed. Please try again`,
+            'red-snackbar'
+          );
+        }
+      });
     }
   }
 

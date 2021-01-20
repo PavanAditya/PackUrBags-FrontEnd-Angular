@@ -1,4 +1,4 @@
-import * as AuthActions from './auth.actions';
+import * as FlightActions from './flight.actions';
 import { UserDetailsModel } from 'src/app/shared/models/user-details.model';
 
 export interface UserData {
@@ -7,8 +7,8 @@ export interface UserData {
   };
 }
 
-export interface AuthState {
-  auth: UserData;
+export interface FlightState {
+  flight: UserData;
 }
 
 export const initialState: UserData = {
@@ -21,17 +21,19 @@ export const initialState: UserData = {
       picture: '',
       tokens: [],
       verifiedPhNum: null,
-      createdDate: null
+      createdDate: null,
+      lastUpdateDateTime: null,
+      userType: ''
     }
   }
 };
 
-export function AuthReducer(
+export function FlightReducer(
   state = initialState,
-  action: AuthActions.AuthActions
+  action: FlightActions.FlightActions
 ): any {
   switch (action.type) {
-    case AuthActions.AuthActionTypes.GET_USER_DETAILS_SUCCESS: {
+    case FlightActions.FlightActionTypes.GET_USER_DETAILS_SUCCESS: {
       const userResp = action.payload;
       const userDetailsResp = userResp.dataObject.data[0];
       console.log(userDetailsResp, 'dets');
@@ -48,7 +50,9 @@ export function AuthReducer(
             picture: userDetailsResp.picture ? userDetailsResp.picture : null,
             tokens: userDetailsResp.tokens,
             verifiedPhNum: userDetailsResp.verifiedPhNum,
-            createdDate: userDetailsResp.createdDate
+            createdDate: userDetailsResp.createdDate,
+            lastUpdateDateTime: userDetailsResp.lastUpdateDateTime,
+            userType: userDetailsResp.userType
           },
         },
       };
@@ -58,7 +62,7 @@ export function AuthReducer(
   }
 }
 
-export const getUserDetails = (state: AuthState) => {
+export const getUserDetails = (state: FlightState) => {
   console.log(state);
-  return state.auth.user.userDetails;
+  return state.flight.user.userDetails;
 };

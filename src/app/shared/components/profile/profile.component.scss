@@ -1,0 +1,48 @@
+.profile {
+  margin-top: 5%;
+  .edit-icon {
+    z-index: 1;
+    position: absolute;
+    padding: 10px;
+    border-radius: 50px;
+    background: #00393b;
+    color: #00c2cb;
+    margin: 135px 0 0 135px;
+  }
+  mat-card {
+    width: 50%;
+  }
+  mat-card-title {
+    padding: 25px;
+  }
+  mat-card-footer {
+    padding: 25px;
+  }
+  .label-adjust {
+    padding-top: 20px;
+  }
+  .profilePic-label {
+    cursor: pointer;
+    img {
+      border-radius: 50px;
+    }
+  }
+  .updated-date-time {
+    font-size: 13px;
+    i {
+      font-weight: 600;
+    }
+  }
+  #profilePic {
+    display: none;
+  }
+  .profile-dets {
+    mat-label {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    p {
+      font-size: 18px;
+    }
+  }
+}

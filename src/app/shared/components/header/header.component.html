@@ -1,0 +1,26 @@
+<mat-toolbar>
+  <a [routerLink]="['/home']"
+  matTooltip="Home" [matTooltipPosition]="'below'" matTooltipClass="tooltip">
+    <img src="assets/logos/pack-ur-bags-contrast.png" alt="pack-ur-bags-logo" height="75">
+  </a>
+  <div fxFlex fxLayoutAlign="end start" class="head-menu" *ngIf="!userLoggedIn()">
+    <button mat-button class="btn-login" [routerLink]="'/login'" *ngIf="activateRoute !== '/login'">
+      Login
+    </button>
+  </div>
+  <div fxFlex fxLayoutAlign="end start" class="head-menu" *ngIf="userLoggedIn()">
+    <button mat-button [matMenuTriggerFor]="menu" class="display-pic">
+      <span>{{ user.firstName }}</span>
+      <img [src]="displayPicture" alt="user-display-pic">
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item class="username">Welcome <i>{{user.firstName + ' ' + user.lastName}}</i></button>
+      <button mat-menu-item routerLink='/profile'>
+        <mat-icon>person</mat-icon> Profile
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon> Logout
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>

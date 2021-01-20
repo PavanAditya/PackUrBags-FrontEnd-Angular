@@ -4,30 +4,32 @@ import { Action } from '@ngrx/store';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
-import * as AuthActions from './auth.actions';
+import * as FlightActions from './flight.actions';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Injectable()
-export class AuthEffects {
+export class FlightEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
+    private userService: UserService
   ) { }
 
   @Effect()
   getUserDetails$: Observable<Action> = this.actions$.pipe(
-    ofType<AuthActions.GetUserDetails>(
-      AuthActions.AuthActionTypes.GET_USER_DETAILS
+    ofType<FlightActions.GetUserDetails>(
+      FlightActions.FlightActionTypes.GET_USER_DETAILS
     ),
-    map((action: AuthActions.GetUserDetails) => action.payload),
+    map((action: FlightActions.GetUserDetails) => action.payload),
     switchMap(reqData =>
       forkJoin([
-        this.authService.userData(reqData),
+        this.userService.userData(reqData),
       ]).pipe(
         map(res => {
           if (res) {
             const userDetails = res[0].body;
-            return new AuthActions.GetUserDetailsSuccess(userDetails);
+            return new FlightActions.GetUserDetailsSuccess(userDetails);
           }
         })
       )

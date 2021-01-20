@@ -1,0 +1,71 @@
+<div fxLayoutAlign="center start" class="profile">
+  <mat-card>
+    <mat-card-title>
+      <input type="file" id="profilePic" #profilePic (change)="uploadProfilePic($event)" name="image"
+        autocomplete="off" />
+      <p>
+        <label for="profilePic" fxLayoutAlign="center start" class="profilePic-label">
+          <img [src]="displayPicture" alt="pack-ur-bags-logo" height="175"
+            matTooltip="Recommended: Upload Square dimensional Image." [matTooltipPosition]="'after'"
+            matTooltipClass="tooltip">
+          <span class="edit-icon" matTooltip="Recommended: Upload Square dimensional Image."
+            [matTooltipPosition]="'after'" matTooltipClass="tooltip">
+            <mat-icon>camera</mat-icon>
+          </span>
+        </label>
+      </p>
+      <h1 fxLayoutAlign="center start">My Profile</h1>
+      <p fxLayoutAlign="end start" class="updated-date-time">
+        <b>Last Updated On: </b> <i>{{lastUpdatedDateAndTime}}</i>
+      </p>
+    </mat-card-title>
+    <mat-card-content fxLayout="row wrap" fxLayoutAlign="center start">
+      <form [formGroup]="profileForm" fxFlex="100" fxLayout="row wrap"
+        fxLayoutAlign="center start">
+        <div class="profile-dets" fxFlex="100" fxLayout="row" fxLayoutAlign="center start">
+          <mat-label [className]="editProfile ? 'label-adjust' : ''" fxFlex="45" fxLayoutAlign="end start">First Name: </mat-label>
+          <p *ngIf="!editProfile" fxFlex="50" fxLayoutAlign="start start" fxFlexOffset="3">{{user.firstName}}</p>
+          <mat-form-field appearance="outline" fxFlex="100" *ngIf="editProfile" fxLayoutAlign="start start"
+            fxFlexOffset="3">
+            <input type="text" matInput formControlName="firstName" fxFlex="100">
+            <mat-error>Enter valid First Name</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="profile-dets" fxFlex="100" fxLayout="row" fxLayoutAlign="center start">
+          <mat-label [className]="editProfile ? 'label-adjust' : ''" fxFlex="45" fxLayoutAlign="end start">Last Name: </mat-label>
+          <p *ngIf="!editProfile" fxFlex="50" fxLayoutAlign="start start" fxFlexOffset="3">{{user.lastName}}</p>
+          <mat-form-field appearance="outline" fxFlex="100" *ngIf="editProfile" fxLayoutAlign="start start"
+            fxFlexOffset="3">
+            <input type="text" matInput formControlName="lastName" fxFlex="100">
+            <mat-error>Enter valid Last Name</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="profile-dets" fxFlex="100" fxLayout="row" fxLayoutAlign="center start">
+          <mat-label [className]="editProfile ? 'label-adjust' : ''" fxFlex="45" fxLayoutAlign="end start">Email Address: </mat-label>
+          <p *ngIf="!editProfile" fxFlex="50" fxLayoutAlign="start start" fxFlexOffset="3">{{user.email}}</p>
+          <mat-form-field appearance="outline" fxFlex="100" *ngIf="editProfile" fxLayoutAlign="start start"
+            fxFlexOffset="3">
+            <input type="text" matInput formControlName="email" fxFlex="100">
+            <mat-error>Enter valid Email Address</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="profile-dets" fxFlex="100" fxLayout="row" fxLayoutAlign="center start">
+          <mat-label [className]="editProfile ? 'label-adjust' : ''" fxFlex="45" fxLayoutAlign="end start">Mobile Number: </mat-label>
+          <p *ngIf="!editProfile" fxFlex="50" fxLayoutAlign="start start" fxFlexOffset="3">{{user.mobileNumber}}</p>
+          <mat-form-field appearance="outline" fxFlex="100" *ngIf="editProfile" fxLayoutAlign="start start"
+            fxFlexOffset="3">
+            <input type="text" matInput formControlName="mobileNumber" fxFlex="100">
+            <mat-error>Enter valid Mobile Number</mat-error>
+          </mat-form-field>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-footer fxLayout="row wrap" fxLayoutAlign="end start">
+      <button mat-raised-button color="primary" type="button" (click)="editProfile = true"
+        *ngIf="!editProfile">Edit</button>
+      <button mat-raised-button color="dafault" type="button" (click)="editProfile = false"
+        *ngIf="editProfile">Cancel</button>
+      <button mat-raised-button color="primary" type="button" (click)="updateProfile()" fxFlexOffset="2" *ngIf="editProfile">Save</button>
+    </mat-card-footer>
+  </mat-card>
+</div>

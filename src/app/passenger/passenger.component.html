@@ -1,1 +1,164 @@
-<p>passenger works!</p>
+<div fxLayoutAlign="center start" class="passenger-home">
+  <mat-card fxFlex.lg="80" fxFlex.md="80" fxFlex.gt-lg="80" fxFlex.sm="100" fxFlex.xs="100" class="mat-card-flight">
+    <mat-card-title fxLayoutAlign="center start">
+      <h1 class="card-title">
+        <div>Choose </div>
+        <div fxFlexOffset="2"><img src="assets/logos/pack-ur-bags-ur.png" alt="pack-ur-bags-logo" height="40"
+            class="ur-logo"></div>
+        <div fxFlexOffset="28">Trip</div>
+      </h1>
+    </mat-card-title>
+    <mat-card-content fxLayout="row wrap" fxLayoutAlign="center start">
+      <div class="form-toggle" fxLayout="row wrap" fxFlex.lg="50" fxFlex.md="50" fxFlex.gt-lg="50" fxFlex.sm="100"
+        fxFlex.xs="100">
+        <div [className]="activeTab === 'one-way' ? 'tab active' : 'tab'" (click)="activeTab = 'one-way'"
+          fxLayoutAlign="center" fxFlex="33">One Way</div>
+        <div [className]="activeTab === 'round-trip' ? 'tab active' : 'tab'" (click)="activeTab = 'round-trip'"
+          fxLayoutAlign="center" fxFlex="33">Round Trip</div>
+        <div [className]="activeTab === 'multi-city' ? 'tab active' : 'tab'" (click)="activeTab = 'multi-city'"
+          fxLayoutAlign="center" fxFlex="33">Multi City</div>
+      </div>
+      <div fxLayout="row wrap" fxFlex="100">
+        <div fxFlex.gt-lg="50" fxFlex.lg="50" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+          <mat-form-field appearance="outline" fxFlex="100" fxLayoutAlign="start start">
+            <mat-label>From</mat-label>
+            <input type="text" placeholder="Visakhapatnam" matInput [formControl]="from"
+              [matAutocomplete]="fromAutoComplete">
+            <mat-autocomplete #fromAutoComplete="matAutocomplete" [displayWith]="displayValue">
+              <mat-option *ngFor="let airport of filteredFromAirportsList | async" [value]="airport"
+                fxLayout="row wrap">
+                <div fxFlex="50" class="city-name">{{airport.airport_name.length > 25 ?
+                  (airport.airport_name.substring(0, 25) + '...') : airport.airport_name}}</div>
+                <div fxFlexOffset="20" fxFlex="10" class="airport-code">{{airport.IATA_code}}</div>
+                <div fxFlexOffset="5" fxFlex="100" class="airport-name">{{airport.city_name}}</div>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="swap-circle" fxLayoutAlign.md="center start" fxLayoutAlign.xs="center start" (click)="swapCities()">
+          <mat-icon>swap_horiz</mat-icon>
+        </div>
+        <div fxFlex.gt-lg="50" fxFlex.lg="50" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+          <mat-form-field appearance="outline" fxFlexOffset.lg="4" fxFlexOffset.gt-lg="4" fxFlex="100"
+            fxLayoutAlign="start start">
+            <mat-label>To</mat-label>
+            <input type="text" placeholder="Bangalore" matInput [formControl]="to" [matAutocomplete]="toAutoComplete">
+            <mat-autocomplete #toAutoComplete="matAutocomplete" [displayWith]="displayValue">
+              <mat-option *ngFor="let airport of filteredToAirportsList | async" [value]="airport" fxLayout="row wrap">
+                <div fxFlex="50" class="city-name">{{airport.airport_name.length > 25 ?
+                  (airport.airport_name.substring(0, 25) + '...') : airport.airport_name}}</div>
+                <div fxFlexOffset="20" fxFlex="10" class="airport-code">{{airport.IATA_code}}</div>
+                <div fxFlexOffset="5" fxFlex="100" class="airport-name">{{airport.city_name}}</div>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="row wrap" fxFlex="100">
+        <div [fxFlex.gt-lg]="activeTab === 'one-way' ? '50' : '33'" [fxFlex.lg]="activeTab === 'one-way' ? '50' : '33'"
+          fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+          <mat-form-field appearance="outline" fxFlex="100" fxLayoutAlign="center start">
+            <mat-label>From date</mat-label>
+            <input matInput [matDatepicker]="fromDatePicker" [formControl]="fromDate">
+            <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #fromDatePicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div [fxFlex.gt-lg]="activeTab === 'one-way' ? '0' : '33'" [fxFlex.lg]="activeTab === 'one-way' ? '0' : '33'"
+          fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+          <mat-form-field appearance="outline" fxFlex="95" fxFlexOffset.lg="5" fxFlexOffset.gt-lg="5"
+            fxLayoutAlign="center start" *ngIf="activeTab !== 'one-way'">
+            <mat-label>To date</mat-label>
+            <input matInput [matDatepicker]="toDatePicker" [formControl]="toDate">
+            <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #toDatePicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row wrap" [fxFlex.gt-lg]="activeTab === 'one-way' ? '50' : '33'"
+          [fxFlex.lg]="activeTab === 'one-way' ? '50' : '33'" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100"
+          fxLayoutAlign="center start">
+          <mat-accordion fxFlex="95" fxFlexOffset.lg="5" fxFlexOffset.gt-lg="5" matTooltip="Click to Add Passengers" [matTooltipPosition]="'below'" matTooltipClass="tooltip">
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Adults {{ adults }} Children {{ children }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div fxLayout="column">
+                <div fxFlex="100" fxLayoutAlign="start start">
+                  <h4>Adults</h4>
+                </div>
+                <div fxFlex="100" fxLayoutAlign="center start">
+                  <div class="form-toggle pass-toggle" fxLayout="row wrap" fxFlex="100">
+                    <div [className]="adults === '1' ? 'tab active' : 'tab'" (click)="adults = '1'"
+                      fxLayoutAlign="center" fxFlex="10">1</div>
+                    <div [className]="adults === '2' ? 'tab active' : 'tab'" (click)="adults = '2'"
+                      fxLayoutAlign="center" fxFlex="10">2</div>
+                    <div [className]="adults === '3' ? 'tab active' : 'tab'" (click)="adults = '3'"
+                      fxLayoutAlign="center" fxFlex="10">3</div>
+                    <div [className]="adults === '4' ? 'tab active' : 'tab'" (click)="adults = '4'"
+                      fxLayoutAlign="center" fxFlex="10">4</div>
+                    <div [className]="adults === '5' ? 'tab active' : 'tab'" (click)="adults = '5'"
+                      fxLayoutAlign="center" fxFlex="10">5</div>
+                    <div [className]="adults === '6' ? 'tab active' : 'tab'" (click)="adults = '6'"
+                      fxLayoutAlign="center" fxFlex="10">6</div>
+                    <div [className]="adults === '7' ? 'tab active' : 'tab'" (click)="adults = '7'"
+                      fxLayoutAlign="center" fxFlex="10">7</div>
+                    <div [className]="adults === '8' ? 'tab active' : 'tab'" (click)="adults = '8'"
+                      fxLayoutAlign="center" fxFlex="10">8</div>
+                    <div [className]="adults === '9' ? 'tab active' : 'tab'" (click)="adults = '9'"
+                      fxLayoutAlign="center" fxFlex="10">9</div>
+                    <div [className]="adults === '10' ? 'tab active' : 'tab'" (click)="adults = '10'"
+                      fxLayoutAlign="center" fxFlex="10">10</div>
+                  </div>
+                </div>
+                <div fxFlex="100" fxLayoutAlign="start start">
+                  <h4>Children</h4>
+                </div>
+                <div fxFlex="100" fxLayoutAlign="start start">
+                  <div class="form-toggle pass-toggle" fxLayout="row wrap" fxFlex="50">
+                    <div [className]="children === '0' ? 'tab active' : 'tab'" (click)="children = '0'"
+                      fxLayoutAlign="center" fxFlex="25">0</div>
+                    <div [className]="children === '1' ? 'tab active' : 'tab'" (click)="children = '1'"
+                      fxLayoutAlign="center" fxFlex="25">1</div>
+                    <div [className]="children === '2' ? 'tab active' : 'tab'" (click)="children = '2'"
+                      fxLayoutAlign="center" fxFlex="25">2</div>
+                    <div [className]="children === '3' ? 'tab active' : 'tab'" (click)="children = '3'"
+                      fxLayoutAlign="center" fxFlex="25">3</div>
+                  </div>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <div fxLayout="row wrap" fxFlex="100" fxLayoutAlign="center start">
+        <button mat-raised-button color="default" type="button" fxLayoutAlign="center start" (click)="searchFlights()"
+          fxFlex.lg="10" fxFlex.md="40" fxFlex.gt-lg="10" fxFlex.sm="60" fxFlex.xs="60" class="btn-search">
+          <mat-icon matPrefix>search</mat-icon>
+          Search
+        </button>
+      </div>
+      <div fxLayout="row wrap" fxFlex="100" fxLayoutAlign="center start" class="covid-safety-img"
+        *ngIf="!panelOpenState">
+        <img src="assets/images/covid-safety.png" alt="covid-safety-desc-img" height="75" />
+      </div>
+      <div fxLayout="row wrap" fxFlex="100" fxLayoutAlign="center start">
+        <mat-card fxFlex.lg="90" fxFlex.md="90" fxFlex.gt-lg="90" fxFlex.sm="100" fxFlex.xs="100" class="offers-card">
+          <mat-card-title fxLayoutAlign="center start">
+            <h3>Offers Only For You</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="row wrap" fxLayoutAlign="center start">
+            <mat-chip-list class="example-chip" cdkDropList (cdkDropListDropped)="drop($event)">
+              <mat-chip fxLayout="column" cdkDrag class="example-box" *ngFor="let offer of offers"
+                matTooltip="Drag to Move" [matTooltipPosition]="'above'" matTooltipClass="tooltip">
+                <img fxFlex="100" [src]="offer.url" [alt]="offer.name">
+                <div fxflex="100">{{offer.desc}}</div>
+              </mat-chip>
+            </mat-chip-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

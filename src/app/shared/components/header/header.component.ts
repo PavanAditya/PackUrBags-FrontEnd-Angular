@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, takeUntil, filter } from 'rxjs/operators';
 
-import { AuthFacadeService } from 'src/app/store';
-import { UserDetailsModel } from '../models/user-details.model';
-import { AuthService } from '../services/auth.service';
+import { FlightFacadeService } from 'src/app/store';
+import { UserFacadeService } from 'src/app/store';
+import { UserDetailsModel } from '../../models/user-details.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -18,18 +19,28 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user: UserDetailsModel;
   displayPicture = 'assets/images/profile-img.png';
   token = '';
+  activateRoute = '';
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService,
-    private authFacadeService: AuthFacadeService
-  ) { }
+    private flightFacadeService: FlightFacadeService,
+    private userFacadeService: UserFacadeService
+  ) {
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd)
+      ).subscribe((navigationEnd: NavigationEnd) => {
+        this.activateRoute = navigationEnd.url;
+      });
+  }
 
   ngOnInit(): void {
-    if (localStorage.getItem('token')) {
-      this.token = localStorage.getItem('token');
+    if (this.authService.getSessionItem('token')) {
+      this.token = this.authService.getSessionItem('token');
     }
-    this.authFacadeService.userDetails$
+    this.userFacadeService.userDetails$
       .pipe(takeUntil(this.unSubscribe), distinctUntilChanged())
       .subscribe(user => {
         this.user = user;
@@ -40,7 +51,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   userLoggedIn(): boolean {
-    if (localStorage.getItem('token')) {
+    if (this.authService.getSessionItem('token')) {
       return true;
     }
     return false;

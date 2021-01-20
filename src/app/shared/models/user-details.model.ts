@@ -7,4 +7,6 @@ export interface UserDetailsModel {
   tokens: string[];
   verifiedPhNum: boolean;
   createdDate: Date;
+  lastUpdateDateTime: Date;
+  userType: string;
 };

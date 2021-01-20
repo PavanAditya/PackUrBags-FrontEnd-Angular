@@ -8,3 +8,13 @@ $custom-typography: mat-typography-config($font-family: '"Titillium Web", sans-s
 html, body { height: 100%; background-color: #fafafa }
 body { margin: 0; font-family: 'Titillium Web', sans-serif !important; }
 h1, h2, h3 { font-weight: 700 !important; font-family: 'Cabin', sans-serif !important; font-size: 30px !important; }
+.mat-tooltip.tooltip {
+  background-color: rgb(0, 82, 82);
+  font-size: 13px;
+}
+mat-card {
+  background: #f9f9f9 !important;
+  -webkit-box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.3) !important;
+}

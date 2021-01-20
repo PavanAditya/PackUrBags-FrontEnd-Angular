@@ -4,7 +4,17 @@
 
 export const environment = {
   production: false,
-  baseUrl: `http://localhost:4000/api/v1`
+  baseUrl: `http://localhost:4000/api/v1`,
+  encryptionKey: 'msp-pub-encrypt',
+  firebaseConfig: {
+    apiKey: 'AIzaSyAXbLCn8DpHM5dgRxVD4glU0aeHMMa9y4o',
+    authDomain: 'chat-dude.firebaseapp.com',
+    databaseURL: 'https://chat-dude.firebaseio.com',
+    projectId: 'chat-dude',
+    storageBucket: 'chat-dude.appspot.com',
+    messagingSenderId: '872212122012',
+    appId: '1:872212122012:web:e441a67631f4de66d96059'
+  }
 };
 
 /*
