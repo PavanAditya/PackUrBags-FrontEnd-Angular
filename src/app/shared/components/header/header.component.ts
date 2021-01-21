@@ -61,6 +61,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.logout(this.token).subscribe(resp => {
       localStorage.clear();
       this.router.navigate(['/']);
+    }, err => {
+      localStorage.clear();
+      this.router.navigate(['/']);
     });
   }
 

@@ -1,0 +1,14 @@
+<mat-nav-list>
+  <p (click)="openLink()">
+    <img [src]="data.url" [alt]="data.name" height="275">
+  </p>
+
+  <p class="chip-desc" (click)="openLink()">{{ data.desc }}</p>
+
+  <div class="chip-footer" (click)="openLink()">
+    Offer available on Airlines:
+    <div fxLayout="row" fxLayoutAlign="center start">
+      <img *ngFor="let img of data.airlines" [src]="img" [alt]="img" height="100">
+    </div>
+  </div>
+</mat-nav-list>

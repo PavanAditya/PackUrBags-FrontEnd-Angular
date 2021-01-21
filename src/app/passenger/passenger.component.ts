@@ -2,12 +2,16 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, map, startWith, takeUntil } from 'rxjs/operators';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+
+import { FlightFacadeService, UserFacadeService } from '../store';
 import { airportsList } from '../shared/mocks/airports.mock';
 import { offersList } from '../shared/mocks/offers-list.mock';
 import { Airport } from '../shared/models/airport.model';
 import { UserDetailsModel } from '../shared/models/user-details.model';
-import { FlightFacadeService, UserFacadeService } from '../store';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { OfferDetailsSheetComponent } from './offer-details-sheet/offer-details-sheet.component';
+import { OfferDetails } from '../shared/models/offer-details.model';
 
 @Component({
   selector: 'app-passenger',
@@ -34,8 +38,9 @@ export class PassengerComponent implements OnInit, OnDestroy {
   toAirportsList: Airport[] = airportsList;
 
   constructor(
+    private bottomSheet: MatBottomSheet,
+    private userFacadeService: UserFacadeService,
     private flightFacadeService: FlightFacadeService,
-    private userFacadeService: UserFacadeService
   ) { }
 
   ngOnInit(): void {
@@ -76,9 +81,15 @@ export class PassengerComponent implements OnInit, OnDestroy {
     console.log('children', this.children);
   }
 
-  drop(event: CdkDragDrop<{ url: string; name: string; desc: string }[]>): void {
+  drop(event: CdkDragDrop<OfferDetails[]>): void {
     console.log(event);
     moveItemInArray(this.offers, event.previousIndex, event.currentIndex);
+  }
+
+  openChipSheet(chipDetails: OfferDetails): void {
+    this.bottomSheet.open(OfferDetailsSheetComponent, {
+      data: chipDetails
+    });
   }
 
   private filterFromCities(value: string): Airport[] {
