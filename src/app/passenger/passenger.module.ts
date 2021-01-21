@@ -6,10 +6,13 @@ import { PassengerComponent } from './passenger.component';
 import { SharedModule } from '../shared/shared.module';
 import { OfferDetailsSheetComponent } from './offer-details-sheet/offer-details-sheet.component';
 import { MAT_BOTTOM_SHEET_DEFAULT_OPTIONS } from '@angular/material/bottom-sheet';
+import { FlightsComponent } from './flights/flights.component';
+import { FlightSeatLayoutComponent } from './flight-seat-layout/flight-seat-layout.component';
+import { FlightBookingComponent } from './flight-booking/flight-booking.component';
 
 
 @NgModule({
-  declarations: [PassengerComponent, OfferDetailsSheetComponent],
+  declarations: [PassengerComponent, OfferDetailsSheetComponent, FlightsComponent, FlightSeatLayoutComponent, FlightBookingComponent],
   imports: [
     CommonModule,
     PassengerRoutingModule,

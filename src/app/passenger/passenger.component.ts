@@ -12,6 +12,7 @@ import { Airport } from '../shared/models/airport.model';
 import { UserDetailsModel } from '../shared/models/user-details.model';
 import { OfferDetailsSheetComponent } from './offer-details-sheet/offer-details-sheet.component';
 import { OfferDetails } from '../shared/models/offer-details.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-passenger',
@@ -30,6 +31,7 @@ export class PassengerComponent implements OnInit, OnDestroy {
   toDate = new FormControl('');
   adults = '1';
   children = '0';
+  searchQuery = {};
   panelOpenState = false;
   offers = offersList;
   filteredFromAirportsList: Observable<Airport[]>;
@@ -38,6 +40,7 @@ export class PassengerComponent implements OnInit, OnDestroy {
   toAirportsList: Airport[] = airportsList;
 
   constructor(
+    private router: Router,
     private bottomSheet: MatBottomSheet,
     private userFacadeService: UserFacadeService,
     private flightFacadeService: FlightFacadeService,
@@ -79,6 +82,16 @@ export class PassengerComponent implements OnInit, OnDestroy {
     console.log('toDate', this.toDate.value);
     console.log('adults', this.adults);
     console.log('children', this.children);
+    this.searchQuery = {
+      ...this.searchQuery,
+      from: this.from.value.IATA_code,
+      to: this.to.value.IATA_code,
+      fromDate: this.fromDate.value,
+      toDate: this.toDate.value,
+      adults: this.adults,
+      children: this.children,
+    }
+    this.router.navigate(['flights', JSON.stringify(this.searchQuery)]);
   }
 
   drop(event: CdkDragDrop<OfferDetails[]>): void {
