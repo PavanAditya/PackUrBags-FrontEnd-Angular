@@ -77,7 +77,8 @@
         <div fxLayout="row wrap" [fxFlex.gt-lg]="activeTab === 'one-way' ? '50' : '33'"
           [fxFlex.lg]="activeTab === 'one-way' ? '50' : '33'" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100"
           fxLayoutAlign="center start">
-          <mat-accordion fxFlex="95" fxFlexOffset.lg="5" fxFlexOffset.gt-lg="5" matTooltip="Click to Add Passengers" [matTooltipPosition]="'below'" matTooltipClass="tooltip">
+          <mat-accordion fxFlex="95" fxFlexOffset.lg="5" fxFlexOffset.gt-lg="5" matTooltip="Click to Add Passengers"
+            [matTooltipPosition]="'below'" matTooltipClass="tooltip">
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
               <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -141,7 +142,10 @@
       </div>
       <div fxLayout="row wrap" fxFlex="100" fxLayoutAlign="center start" class="covid-safety-img"
         *ngIf="!panelOpenState">
-        <img src="assets/images/covid-safety.png" alt="covid-safety-desc-img" height="75" />
+        <a
+          href="https://www.who.int/news-room/articles-detail/public-health-considerations-while-resuming-international-travel" target="_">
+          <img src="assets/images/covid-safety.png" alt="covid-safety-desc-img" height="75" />
+        </a>
       </div>
       <div fxLayout="row wrap" fxFlex="100" fxLayoutAlign="center start">
         <mat-card fxFlex.lg="90" fxFlex.md="90" fxFlex.gt-lg="90" fxFlex.sm="100" fxFlex.xs="100" class="offers-card">
@@ -151,7 +155,8 @@
           <mat-card-content fxLayout="row wrap" fxLayoutAlign="center start">
             <mat-chip-list class="example-chip" cdkDropList (cdkDropListDropped)="drop($event)">
               <mat-chip fxLayout="column" cdkDrag class="example-box" *ngFor="let offer of offers"
-                matTooltip="Drag to Move" [matTooltipPosition]="'above'" matTooltipClass="tooltip" (click)="openChipSheet(offer)">
+                matTooltip="Drag to Move" [matTooltipPosition]="'above'" matTooltipClass="tooltip"
+                (click)="openChipSheet(offer)">
                 <img fxFlex="100" [src]="offer.url" [alt]="offer.name">
                 <div fxflex="100">{{offer.desc}}</div>
               </mat-chip>
