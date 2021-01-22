@@ -4,19 +4,19 @@ import { Observable } from 'rxjs';
 
 import * as reducer from './flight.reducer';
 import * as Actions from './flight.actions';
-import { UserDetailsModel } from 'src/app/shared/models/user-details.model';
+import { Flight } from '../../../shared/models/flight.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FlightFacadeService {
-  userDetails$: Observable<UserDetailsModel>;
+  flightsList$: Observable<Flight[]>;
 
   constructor(private store: Store<reducer.FlightState>) {
-    this.userDetails$ = this.store.pipe(select(reducer.getUserDetails));
+    this.flightsList$ = this.store.pipe(select(reducer.getFlightsList));
   }
 
-  getUserDetails(token: string): void {
-    this.store.dispatch(new Actions.GetUserDetails(token));
+  getFlightDetails(token: string): void {
+    this.store.dispatch(new Actions.GetFlightDetails(token));
   }
 }

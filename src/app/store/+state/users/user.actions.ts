@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { UserDetailsModel } from 'src/app/shared/models/user-details.model';
-import { UserDetsRespModel } from './user-helper';
+import { UserDetsRespModel } from '../../../shared/models/user-dets-response.model';
 
 export enum UserActionTypes {
   GET_USER_DETAILS = '[User] Get User Details',

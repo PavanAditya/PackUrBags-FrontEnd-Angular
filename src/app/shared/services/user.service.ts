@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserDetsRespModel } from 'src/app/store/+state/flights/flight-helper';
 import { environment } from 'src/environments/environment';
 import { UserDetailsModel } from '../models/user-details.model';
+import { UserDetsRespModel } from '../models/user-dets-response.model';
 
 @Injectable({
   providedIn: 'root'

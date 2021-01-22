@@ -1,30 +1,19 @@
 import * as FlightActions from './flight.actions';
-import { UserDetailsModel } from 'src/app/shared/models/user-details.model';
+import { Flight } from '../../../shared/models/flight.model';
 
-export interface UserData {
-  user: {
-    userDetails: UserDetailsModel
+export interface FlightData {
+  flight: {
+    flightsList: Flight[]
   };
 }
 
 export interface FlightState {
-  flight: UserData;
+  flight: FlightData;
 }
 
-export const initialState: UserData = {
-  user: {
-    userDetails: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      mobileNumber: '',
-      picture: '',
-      tokens: [],
-      verifiedPhNum: null,
-      createdDate: null,
-      lastUpdateDateTime: null,
-      userType: ''
-    }
+export const initialState: FlightData = {
+  flight: {
+    flightsList: []
   }
 };
 
@@ -33,27 +22,21 @@ export function FlightReducer(
   action: FlightActions.FlightActions
 ): any {
   switch (action.type) {
-    case FlightActions.FlightActionTypes.GET_USER_DETAILS_SUCCESS: {
-      const userResp = action.payload;
-      const userDetailsResp = userResp.dataObject.data[0];
-      console.log(userDetailsResp, 'dets');
+    case FlightActions.FlightActionTypes.GET_FLIGHT_DETAILS_SUCCESS: {
+      const flightsList = action.payload;
+      let flightsListResp;
+      if (flightsList.status === 204) {
+        flightsListResp = [{sl:'sk'}];
+      } else if (flightsList.status === 200) {
+        flightsListResp = flightsList.dataObject.data;
+      } else {
+        flightsListResp = [];
+      }
       return {
         ...state,
-        user: {
-          ...state.user,
-          userDetails: {
-            ...state.user.userDetails,
-            firstName: userDetailsResp.firstName,
-            lastName: userDetailsResp.lastName,
-            email: userDetailsResp.email,
-            mobileNumber: userDetailsResp.mobileNumber ? userDetailsResp.mobileNumber : null,
-            picture: userDetailsResp.picture ? userDetailsResp.picture : null,
-            tokens: userDetailsResp.tokens,
-            verifiedPhNum: userDetailsResp.verifiedPhNum,
-            createdDate: userDetailsResp.createdDate,
-            lastUpdateDateTime: userDetailsResp.lastUpdateDateTime,
-            userType: userDetailsResp.userType
-          },
+        flight: {
+          ...state.flight,
+          flightsList: [...flightsListResp]
         },
       };
     }
@@ -62,7 +45,6 @@ export function FlightReducer(
   }
 }
 
-export const getUserDetails = (state: FlightState) => {
-  console.log(state);
-  return state.flight.user.userDetails;
+export const getFlightsList = (state: FlightState) => {
+  return state.flight.flight.flightsList;
 };

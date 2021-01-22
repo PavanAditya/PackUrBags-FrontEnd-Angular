@@ -90,6 +90,9 @@ export class PassengerComponent implements OnInit, OnDestroy {
       toDate: this.toDate.value,
       adults: this.adults,
       children: this.children,
+    };
+    if (this.activeTab === 'one-way') {
+      delete this.searchQuery[`toDate`];
     }
     this.router.navigate(['flights', JSON.stringify(this.searchQuery)]);
   }
