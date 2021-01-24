@@ -13,5 +13,4 @@ export interface Flight {
   brand: string;
   handicappedAllowed: boolean;
   ancillaryServices: string[];
-  createdDate: Date;
 }
