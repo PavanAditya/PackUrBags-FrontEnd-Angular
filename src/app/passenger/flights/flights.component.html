@@ -1,8 +1,141 @@
-From: {{search.from}}
-To: {{search.to}}
-From Date: {{search.fromDate | date}}
-To Date: {{search.toDate | date}}
-Adults: {{search.adults}}
-Children: {{search.children}}
+<div class="flights" fxLayout="row wrap" fxLayoutAlign="center start">
+  <div fxFlex="100">
+    <mat-card *ngIf="search">
+      <mat-card-content>
+        <div fxLayout="row wrap" fxFlex="100">
+          <div fxFlex.gt-lg="2" fxFlex.lg="2" fxFlex.md="0" fxFlex.sm="0" fxFlex.xs="0"></div>
+          <div fxFlex.gt-lg="20" fxFlex.lg="20" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="50"
+            fxLayoutAlign="center start">
+            <mat-form-field appearance="outline" fxFlex="100" fxLayoutAlign="start start">
+              <mat-label>From</mat-label>
+              <input type="text" placeholder="Visakhapatnam" matInput [formControl]="from"
+                [matAutocomplete]="fromAutoComplete">
+              <mat-autocomplete #fromAutoComplete="matAutocomplete" [displayWith]="displayValue">
+                <mat-option *ngFor="let airport of filteredFromAirportsList | async" [value]="airport.IATA_code"
+                  fxLayout="row wrap">
+                  <div fxFlex="50" class="city-name">{{airport.airport_name.length > 25 ?
+                    (airport.airport_name.substring(0, 25) + '...') : airport.airport_name}}</div>
+                  <div fxFlexOffset="20" fxFlex="10" class="airport-code">{{airport.IATA_code}}</div>
+                  <div fxFlexOffset="5" fxFlex="100" class="airport-name">{{airport.city_name}}</div>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="swap-circle" fxFlex.gt-lg="2" fxFlex.lg="2" fxLayoutAlign.md="center start"
+            fxLayoutAlign.xs="center start" (click)="swapCities()">
+            <mat-icon>swap_horiz</mat-icon>
+          </div>
+          <div fxFlex.gt-lg="20" fxFlex.lg="20" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="50"
+            fxLayoutAlign="center start">
+            <mat-form-field appearance="outline" fxFlexOffset.lg="4" fxFlexOffset.gt-lg="4" fxFlex="100"
+              fxLayoutAlign="start start">
+              <mat-label>To</mat-label>
+              <input type="text" placeholder="Bangalore" matInput [formControl]="to" [matAutocomplete]="toAutoComplete">
+              <mat-autocomplete #toAutoComplete="matAutocomplete" [displayWith]="displayValue">
+                <mat-option *ngFor="let airport of filteredToAirportsList | async" [value]="airport.IATA_code"
+                  fxLayout="row wrap">
+                  <div fxFlex="50" class="city-name">{{airport.airport_name.length > 25 ?
+                    (airport.airport_name.substring(0, 25) + '...') : airport.airport_name}}</div>
+                  <div fxFlexOffset="20" fxFlex="10" class="airport-code">{{airport.IATA_code}}</div>
+                  <div fxFlexOffset="5" fxFlex="100" class="airport-name">{{airport.city_name}}</div>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-lg="16" fxFlex.lg="16" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="50">
+            <mat-form-field appearance="outline" fxFlex="100" fxLayoutAlign="center start">
+              <mat-label>From date</mat-label>
+              <input matInput [matDatepicker]="fromDatePicker" [formControl]="fromDate">
+              <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #fromDatePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-lg="16" fxFlex.lg="16" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="50">
+            <mat-form-field appearance="outline" fxFlex="95" fxFlexOffset.lg="5" fxFlexOffset.gt-lg="5"
+              fxLayoutAlign="center start" *ngIf="!search.toDate">
+              <mat-label>To date</mat-label>
+              <input matInput [matDatepicker]="toDatePicker" [formControl]="toDate">
+              <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #toDatePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxFlex.gt-lg="16" fxFlex.lg="16" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100"
+            fxLayoutAlign="center start">
+            <mat-accordion fxFlex="95" fxFlexOffset.lg="5" fxFlexOffset.gt-lg="5" matTooltip="Click to Add Passengers"
+              [matTooltipPosition]="'below'" matTooltipClass="tooltip">
+              <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Adults {{ adults }} Children {{ children }}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div fxLayout="column">
+                  <div fxFlex="100" fxLayoutAlign="start start">
+                    <h4>Adults</h4>
+                  </div>
+                  <div fxFlex="100" fxLayoutAlign="center start">
+                    <div class="form-toggle pass-toggle" fxLayout="row wrap" fxFlex="100">
+                      <div [className]="adults === '1' ? 'tab active' : 'tab'" (click)="adults = '1'"
+                        fxLayoutAlign="center" fxFlex="10">1</div>
+                      <div [className]="adults === '2' ? 'tab active' : 'tab'" (click)="adults = '2'"
+                        fxLayoutAlign="center" fxFlex="10">2</div>
+                      <div [className]="adults === '3' ? 'tab active' : 'tab'" (click)="adults = '3'"
+                        fxLayoutAlign="center" fxFlex="10">3</div>
+                      <div [className]="adults === '4' ? 'tab active' : 'tab'" (click)="adults = '4'"
+                        fxLayoutAlign="center" fxFlex="10">4</div>
+                      <div [className]="adults === '5' ? 'tab active' : 'tab'" (click)="adults = '5'"
+                        fxLayoutAlign="center" fxFlex="10">5</div>
+                      <div [className]="adults === '6' ? 'tab active' : 'tab'" (click)="adults = '6'"
+                        fxLayoutAlign="center" fxFlex="10">6</div>
+                      <div [className]="adults === '7' ? 'tab active' : 'tab'" (click)="adults = '7'"
+                        fxLayoutAlign="center" fxFlex="10">7</div>
+                      <div [className]="adults === '8' ? 'tab active' : 'tab'" (click)="adults = '8'"
+                        fxLayoutAlign="center" fxFlex="10">8</div>
+                      <div [className]="adults === '9' ? 'tab active' : 'tab'" (click)="adults = '9'"
+                        fxLayoutAlign="center" fxFlex="10">9</div>
+                      <div [className]="adults === '10' ? 'tab active' : 'tab'" (click)="adults = '10'"
+                        fxLayoutAlign="center" fxFlex="10">10</div>
+                    </div>
+                  </div>
+                  <div fxFlex="100" fxLayoutAlign="start start">
+                    <h4>Children</h4>
+                  </div>
+                  <div fxFlex="100" fxLayoutAlign="start start">
+                    <div class="form-toggle pass-toggle" fxLayout="row wrap" fxFlex="40">
+                      <div [className]="children === '0' ? 'tab active' : 'tab'" (click)="children = '0'"
+                        fxLayoutAlign="center" fxFlex="25">0</div>
+                      <div [className]="children === '1' ? 'tab active' : 'tab'" (click)="children = '1'"
+                        fxLayoutAlign="center" fxFlex="25">1</div>
+                      <div [className]="children === '2' ? 'tab active' : 'tab'" (click)="children = '2'"
+                        fxLayoutAlign="center" fxFlex="25">2</div>
+                      <div [className]="children === '3' ? 'tab active' : 'tab'" (click)="children = '3'"
+                        fxLayoutAlign="center" fxFlex="25">3</div>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+          <div fxLayout="row wrap" fxFlex.lg="10" fxFlex.md="40" fxFlex.gt-lg="10" fxFlex.sm="60" fxFlex.xs="60"
+            fxLayoutAlign="center start">
+            <button mat-raised-button color="default" fxFlex="90" type="button" fxLayoutAlign="center start"
+              (click)="searchFlights()" class="btn-search">
+              <mat-icon matPrefix>search</mat-icon>
+              Search
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
-<p>{{flights | json}}</p>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+    <div fxFlex="20" fxLayout="row wrap" fxLayoutAlign="start start">
+      Filters
+    </div>
+    <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start start">
+      <div *ngIf="!flights[0]" fxFlex="100" class="no-flights" fxLayoutAlign="center start">No Flights Available for the Applied filters</div>
+      <div *ngIf="flights[0]">{{flights | json}}</div>
+    </div>
+  </div>
+</div>

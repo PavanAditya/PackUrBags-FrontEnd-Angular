@@ -1,0 +1,90 @@
+.flights {
+  mat-card {
+    width: 100%;
+  }
+  .swap-circle {
+    z-index: 1;
+    margin-left: 20.3%;
+    position: absolute;
+    mat-icon {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 50px;
+      background: #008080da;
+      color: white;
+      font-size: x-large;
+      cursor: pointer;
+    }
+  }
+  .mat-expansion-panel {
+    margin-top: 5px;
+    background: #fafafada;
+  }
+  mat-label {
+    font-size: 18px;
+    padding-left: 10px;
+  }
+  .mat-form-field {
+    place-content: center;
+    align-items: center;
+  }
+  .mat-form-field-wrapper {
+    width: 95% !important;
+    input {
+      margin-left: 10px !important;
+      font-size: 17px !important;
+      margin-top: -5px !important;
+    }
+  }
+  .mat-form-field-outline {
+    background: #fafafada;
+    border-radius: 5px;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 15%), 0px 2px 2px 0px rgb(0 0 0 / 12%), 0px 1px 5px 0px rgb(0 0 0 / 10%);
+  }
+  .tab {
+    padding: 3px;
+    -webkit-border-radius: 51px;
+    -moz-border-radius: 51px;
+    border-radius: 51px;
+    background-color: transparent;
+    color: #000;
+    font-size: medium;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .tab.active {
+    background: #008080da;
+    color: #fff;
+    -webkit-box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.3);
+  }
+  .btn-search {
+    margin-top: 10px;
+    // border-radius: 15px;
+    padding: 2px;
+    color: white;
+    font-size: large;
+    background-color: #008080da !important;
+    -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5) !important;
+    mat-icon {
+      margin-top: -3px;
+      margin-left: -5px;
+    }
+  }
+  .no-flights {
+    margin-top: 2%;
+    font-size: x-large;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 767px) {
+  .swap-circle {
+    margin-left: 40% !important;
+    margin-top: 9%;
+    transform: rotate(90deg);
+  }
+}

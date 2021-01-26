@@ -71,17 +71,12 @@ export class PassengerComponent implements OnInit, OnDestroy {
     this.to.setValue(tempCity);
   }
 
-  displayValue(airport: Airport): string {
+  displayValue(airportCode: string): string {
+    const airport: Airport = this.fromAirportsList.find(el => el.IATA_code === airportCode);
     return airport ? `${airport.city_name} (${airport.IATA_code})` : '';
   }
 
   searchFlights(): void {
-    console.log('from', this.from.value);
-    console.log('to', this.to.value);
-    console.log('fromDate', this.fromDate.value);
-    console.log('toDate', this.toDate.value);
-    console.log('adults', this.adults);
-    console.log('children', this.children);
     this.searchQuery = {
       ...this.searchQuery,
       from: this.from.value.IATA_code,

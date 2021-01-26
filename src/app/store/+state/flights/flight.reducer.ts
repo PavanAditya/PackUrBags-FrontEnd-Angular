@@ -26,7 +26,7 @@ export function FlightReducer(
       const flightsList = action.payload;
       let flightsListResp;
       if (flightsList.status === 204) {
-        flightsListResp = [{sl:'sk'}];
+        flightsListResp = [];
       } else if (flightsList.status === 200) {
         flightsListResp = flightsList.dataObject.data;
       } else {
